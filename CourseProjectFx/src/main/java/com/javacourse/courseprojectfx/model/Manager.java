@@ -1,6 +1,11 @@
 package com.javacourse.courseprojectfx.model;
 
-public class Manager extends User{
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public final class Manager extends User {
     private boolean isAdmin;
 
     public Manager(String name, String surname, String login, String password, boolean isAdmin) {
@@ -8,16 +13,12 @@ public class Manager extends User{
         this.isAdmin = isAdmin;
     }
 
-    public Manager() {
-    }
-
     @Override
-    public void greetUser(String text) {
-        System.out.println("Manager" + text);
-    }
-
-    @Override
-    public void greet() {
-        System.out.println("None");
+    public String toString() {
+        return "Manager{" +
+                "isAdmin=" + isAdmin +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                '}';
     }
 }
