@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="444.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.videogameshop.fxControllers.MainWindow">
+    <TabPane prefHeight="445.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Tab fx:id="shopTab" text="Shop">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <ListView fx:id="shopProducts" layoutX="14.0" layoutY="14.0" prefHeight="339.0" prefWidth="218.0" />
+                <ListView layoutX="250.0" layoutY="14.0" prefHeight="179.0" prefWidth="335.0" />
+                <Button layoutX="527.0" layoutY="212.0" mnemonicParsing="false" onAction="#buyItems" prefHeight="26.0" prefWidth="55.0" text="Buy" />
+            </AnchorPane>
+        </Tab>
+        <Tab text="Products">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="479.0" prefWidth="600.0">
+                <ListView fx:id="productAdminList" layoutX="14.0" layoutY="69.0" onMouseClicked="#loadProductData" prefHeight="316.0" prefWidth="210.0" />
+                <Button layoutX="249.0" layoutY="355.0" mnemonicParsing="false" onAction="#createRecord" text="Add" />
+                <Button layoutX="357.0" layoutY="355.0" mnemonicParsing="false" onAction="#updateRecord" text="Update" />
+                <Button layoutX="481.0" layoutY="355.0" mnemonicParsing="false" onAction="#deleteRecord" text="Delete" />
+                <TextField fx:id="productTitleField" layoutX="232.0" layoutY="43.0" promptText="Title" />
+                <TextArea fx:id="productDescriptionField" layoutX="232.0" layoutY="78.0" prefHeight="154.0" prefWidth="149.0" promptText="Description" />
+                <TextField fx:id="productColorField" layoutX="399.0" layoutY="43.0" promptText="Color " />
+                <RadioButton fx:id="consoleRadio" layoutX="232.0" layoutY="14.0" mnemonicParsing="false" onAction="#disableFields" text="Console">
+                </RadioButton>
+                <RadioButton fx:id="videoGameRadio" layoutX="349.0" layoutY="14.0" mnemonicParsing="false" onAction="#disableFields" text="Video Game">
+               <toggleGroup>
+                  <ToggleGroup fx:id="productType" />
+               </toggleGroup></RadioButton>
+                <RadioButton fx:id="accessoryRadio" layoutX="474.0" layoutY="14.0" mnemonicParsing="false" onAction="#disableFields" text="Accessory" toggleGroup="$productType" />
+                <TextField fx:id="productPriceField" layoutX="399.0" layoutY="78.0" promptText="Price (€)" />
+                <Label alignment="CENTER" layoutX="16.0" layoutY="10.0" prefHeight="47.0" prefWidth="207.0" text="List of products" textAlignment="CENTER">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+            <ChoiceBox fx:id="productSizeChoice" layoutX="399.0" layoutY="115.0" prefHeight="26.0" prefWidth="151.0" />
+            <TextField fx:id="productQuantityField" layoutX="400.0" layoutY="155.0" promptText="Quantity" />
+            <ChoiceBox fx:id="productPegiChoice" layoutX="399.0" layoutY="197.0" prefWidth="150.0" />
+            </AnchorPane>
+        </Tab>
+        <Tab text="Users">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <ListView layoutY="44.0" prefHeight="330.0" prefWidth="200.0" />
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="43.0" prefWidth="200.0" text="List of users" textAlignment="CENTER">
+                    <font>
+                        <Font name="Corbel Bold" size="26.0" />
+                    </font>
+                </Label>
+                <Button layoutX="238.0" layoutY="314.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="64.0" text="Add" />
+                <Button layoutX="312.0" layoutY="314.0" mnemonicParsing="false" text="Remove" />
+                <Button layoutX="379.0" layoutY="314.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="72.0" text="Update" />
+                <TextField layoutX="259.0" layoutY="105.0" promptText="Name" />
+                <TextField layoutX="259.0" layoutY="153.0" promptText="Surname" />
+                <PasswordField layoutX="259.0" layoutY="209.0" promptText="Password" />
+                <PasswordField layoutX="259.0" layoutY="256.0" promptText="Confirm Password" />
+                <TextField layoutX="259.0" layoutY="60.0" promptText="Login" />
+            </AnchorPane>
+        </Tab>
+        <Tab text="Orders">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </Tab>
+        <Tab text="Warehouses">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </Tab>
+    </TabPane>
+</AnchorPane>
