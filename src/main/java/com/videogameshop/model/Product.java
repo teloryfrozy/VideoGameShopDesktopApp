@@ -4,9 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+
 @Getter
 @Setter
 public abstract class Product implements Serializable {
@@ -22,5 +21,14 @@ public abstract class Product implements Serializable {
         this.description = description;
         this.title = title;
         this.price = price;
+    }
+
+    public void removeMessage() {
+        System.out.println("\u001B[31m[Product] " + this.title + " has been removed");
+    }
+    public abstract String getProductType();
+    @Override
+    public String toString() {
+        return String.format("[%s] Title: %s, Price: %.2f", getProductType(), title, price);
     }
 }

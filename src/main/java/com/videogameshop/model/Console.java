@@ -19,4 +19,8 @@ public class Console extends Product {
         this.color = color;
         this.size = size;
     }
+    @Override
+    public String getProductType() {
+        return "Console";
+    }
 }

@@ -17,4 +17,9 @@ public class VideoGame extends Product {
         super(null, 0, description, title, price);
         this.pegi = pegi;
     }
+
+    @Override
+    public String getProductType() {
+        return "Video Game";
+    }
 }

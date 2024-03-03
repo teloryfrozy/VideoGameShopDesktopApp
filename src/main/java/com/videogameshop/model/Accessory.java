@@ -20,4 +20,9 @@ public class Accessory extends Product {
         this.quantity = quantity;
         this.color = color;
     }
+
+    @Override
+    public String getProductType() {
+        return "Accessory";
+    }
 }

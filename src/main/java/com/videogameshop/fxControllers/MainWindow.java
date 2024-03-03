@@ -88,16 +88,25 @@ public class MainWindow implements Initializable {
     public void disableFields() {
 
         if (consoleRadio.isSelected()) {
+            accessoryRadio.setSelected(false);
+            videoGameRadio.setSelected(false);
+
             productPegiChoice.setDisable(true);
-            productQuantityField.setDisable(true);
-            productSizeChoice.setDisable(false);
-            productColorField.setDisable(false);
+            productQuantityField.setDisable(false);
+            productSizeChoice.setDisable(true);
+            productColorField.setDisable(true);
         } else if (accessoryRadio.isSelected()) {
+            consoleRadio.setSelected(false);
+            videoGameRadio.setSelected(false);
+
             productPegiChoice.setDisable(true);
             productQuantityField.setDisable(false);
             productSizeChoice.setDisable(true);
             productColorField.setDisable(true);
         } else {
+            consoleRadio.setSelected(false);
+            accessoryRadio.setSelected(false);
+
             productPegiChoice.setDisable(false);
             productQuantityField.setDisable(true);
             productSizeChoice.setDisable(true);
@@ -124,24 +133,30 @@ public class MainWindow implements Initializable {
 
     public void updateRecord() {
         Product product = (Product) productAdminList.getSelectionModel().getSelectedItem();
+
         if (product instanceof Console console) {
             console.setTitle(productTitleField.getText());
             console.setDescription(productDescriptionField.getText());
+            System.out.println("\u001B[32mConsole updated successfully: " + product.getTitle());
         } else if (product instanceof Accessory accessory) {
             accessory.setTitle(productTitleField.getText());
             accessory.setDescription(productDescriptionField.getText());
+            System.out.println("\u001B[32mAccessory updated successfully: " + product.getTitle());
         } else {
             VideoGame videoGame = (VideoGame) product;
             videoGame.setTitle(productTitleField.getText());
             videoGame.setDescription(productDescriptionField.getText());
+            System.out.println("\u001B[32mVideo Game updated successfully: " + product.getTitle());
         }
     }
 
     public void deleteRecord() {
         Product product = productAdminList.getSelectionModel().getSelectedItem();
         productAdminList.getItems().remove(product);
+        product.removeMessage();
     }
-    public void buyItems(ActionEvent actionEvent) {
+
+    public void buyItems() {
         System.out.println("Buying items");
     }
 }
