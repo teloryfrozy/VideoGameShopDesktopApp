@@ -84,7 +84,7 @@ public class MainWindow implements Initializable {
             }
         }
         // Video Game
-        else if (videoGameRadio.isSelected()){
+        else if (videoGameRadio.isSelected()) {
             try {
                 VideoGame videoGame = new VideoGame(
                         productTitleField.getText(),
@@ -149,21 +149,25 @@ public class MainWindow implements Initializable {
     }
 
     public void updateRecord() {
-        Product product = (Product) productAdminList.getSelectionModel().getSelectedItem();
+        try {
+            Product product = productAdminList.getSelectionModel().getSelectedItem();
 
-        if (product instanceof Console console) {
-            console.setTitle(productTitleField.getText());
-            console.setDescription(productDescriptionField.getText());
-            System.out.println("\u001B[32mConsole updated successfully: " + product.getTitle());
-        } else if (product instanceof Accessory accessory) {
-            accessory.setTitle(productTitleField.getText());
-            accessory.setDescription(productDescriptionField.getText());
-            System.out.println("\u001B[32mAccessory updated successfully: " + product.getTitle());
-        } else {
-            VideoGame videoGame = (VideoGame) product;
-            videoGame.setTitle(productTitleField.getText());
-            videoGame.setDescription(productDescriptionField.getText());
-            System.out.println("\u001B[32mVideo Game updated successfully: " + product.getTitle());
+            if (product instanceof Console console) {
+                console.setTitle(productTitleField.getText());
+                console.setDescription(productDescriptionField.getText());
+                System.out.println("\u001B[32mConsole updated successfully: " + product.getTitle());
+            } else if (product instanceof Accessory accessory) {
+                accessory.setTitle(productTitleField.getText());
+                accessory.setDescription(productDescriptionField.getText());
+                System.out.println("\u001B[32mAccessory updated successfully: " + product.getTitle());
+            } else {
+                VideoGame videoGame = (VideoGame) product;
+                videoGame.setTitle(productTitleField.getText());
+                videoGame.setDescription(productDescriptionField.getText());
+                System.out.println("\u001B[32mVideo Game updated successfully: " + product.getTitle());
+            }
+        } catch (NullPointerException e) {
+            showAlert(Alert.AlertType.INFORMATION, "Warning", "Please select a product to update");
         }
     }
 
@@ -173,8 +177,7 @@ public class MainWindow implements Initializable {
             productAdminList.getItems().remove(product);
             product.removeMessage();
         } catch (NullPointerException e) {
-            // TODO add an alert
-            System.out.println("\u001B[31mNo product selected");
+            showAlert(Alert.AlertType.INFORMATION, "Warning", "Please select a product to delete");
         }
     }
 
