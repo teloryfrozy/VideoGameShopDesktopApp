@@ -86,6 +86,7 @@ public class MainWindow implements Initializable {
     }
 
     public void disableFields() {
+        // TODO: fix issue with radio button selection
 
         if (consoleRadio.isSelected()) {
             accessoryRadio.setSelected(false);
@@ -151,9 +152,13 @@ public class MainWindow implements Initializable {
     }
 
     public void deleteRecord() {
-        Product product = productAdminList.getSelectionModel().getSelectedItem();
-        productAdminList.getItems().remove(product);
-        product.removeMessage();
+        try {
+            Product product = productAdminList.getSelectionModel().getSelectedItem();
+            productAdminList.getItems().remove(product);
+            product.removeMessage();
+        } catch (NullPointerException e) {
+            System.out.println("\u001B[31mNo product selected");
+        }
     }
 
     public void buyItems() {

@@ -29,6 +29,6 @@ public abstract class Product implements Serializable {
     public abstract String getProductType();
     @Override
     public String toString() {
-        return String.format("[%s] Title: %s, Price: %.2f", getProductType(), title, price);
+        return String.format("[%s]: %s, %.2f €", getProductType(), title, price);
     }
 }
