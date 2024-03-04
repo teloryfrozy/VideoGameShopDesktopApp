@@ -10,9 +10,8 @@ import java.util.List;
 @Setter
 public class Cart {
     private int id;
-    private List<Product> productList;
-    private Manager manager;
+    private List<Product> items;
     private Customer customer;
     private LocalDate dateCreated;
-    private List<Comment> chat;
+    private boolean isCheckout;
 }

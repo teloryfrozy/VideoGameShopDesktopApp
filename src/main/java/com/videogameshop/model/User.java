@@ -8,14 +8,12 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public abstract class User implements Serializable {
-    //Man reikes veliau, kai dirbsiu su db
     protected int id;
-    protected String name;
-    protected String surname;
     protected String login;
     protected String password;
+    protected String name;
+    protected String surname;
     protected LocalDate dateCreated;
-    protected LocalDate dateModified;
 
     public User(String name, String surname, String login, String password) {
         this.name = name;
@@ -24,6 +22,4 @@ public abstract class User implements Serializable {
         this.password = password;
         this.dateCreated = LocalDate.now();
     }
-
-
 }

@@ -7,10 +7,10 @@ import lombok.Setter;
 @Setter
 public class Console extends Product {
     private String title;
-    private String color;
     private String description;
     private String size;
     private float ranking;
+    private String color;
 
 
     public Console(String title, String description, String color, float price, String size) {

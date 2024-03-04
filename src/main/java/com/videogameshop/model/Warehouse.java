@@ -10,9 +10,9 @@ import java.util.List;
 @Setter
 public class Warehouse {
     private int id;
-    private String address;
     private List<Product> productList;
-    private List<Manager> employees;
+    private List<Manager> managers;
+    private String address;
     private LocalDate dateCreated;
     private LocalDate dateModified;
 }

@@ -9,11 +9,11 @@ import java.util.List;
 @Getter
 @Setter
 public abstract class Product implements Serializable {
-    protected List<Comment> comments;
     int id;
-    private String description;
     private String title;
+    private String description;
     private float price;
+    protected List<Comment> comments;
 
     public Product(List<Comment> comments, int id, String description, String title, float price) {
         this.comments = comments;

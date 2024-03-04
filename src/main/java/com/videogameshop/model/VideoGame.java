@@ -9,7 +9,6 @@ public class VideoGame extends Product {
     private String title;
     private String description;
     private String pegi;
-    private int id;
     private float ranking;
 
     // Constructor with all the fields
