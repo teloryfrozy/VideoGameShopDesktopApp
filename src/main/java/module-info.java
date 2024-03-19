@@ -4,6 +4,9 @@ module com.javacourse.courseprojectfx {
     requires lombok;
     requires mysql.connector.j;
     requires java.sql;
+    requires org.hibernate.orm.core;
+    requires jakarta.persistence;
+    requires java.naming;
 
     requires org.kordamp.bootstrapfx.core;
 
