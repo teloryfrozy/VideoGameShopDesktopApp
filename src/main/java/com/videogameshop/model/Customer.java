@@ -1,12 +1,18 @@
 package com.videogameshop.model;
 
+import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class Customer extends User {
     private String cardNum;
     private String deliveryAddress;

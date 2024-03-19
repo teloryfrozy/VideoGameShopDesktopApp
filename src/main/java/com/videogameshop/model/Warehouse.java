@@ -1,7 +1,9 @@
 package com.videogameshop.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,12 +20,14 @@ import java.util.List;
 public class Warehouse {
     @Id
     private int id;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Product> productList;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Manager> managers;
     private String address;
     private LocalDate dateCreated;
     private LocalDate dateModified;
 
-    private List<Product> productList;
-    private List<Manager> managers;
 
     public Warehouse(int id, String address, LocalDate dateCreated, LocalDate dateModified) {
         this.id = id;
