@@ -53,13 +53,13 @@ public class MainWindow implements Initializable {
         entityManagerFactory = Persistence.createEntityManagerFactory("ProjectManagementSystem");
         productSizeChoice.getItems().addAll(sizes);
         productPegiChoice.getItems().addAll(pegis);
-
     }
 
     //Pass the entity manager object and user from a previous form
     public void createRecord() {
-        // Console
         HibernateShop hibernateShop = new HibernateShop(entityManagerFactory);
+
+        // Console
         if (consoleRadio.isSelected()) {
             try {
                 float price = Float.parseFloat(productPriceField.getText());
