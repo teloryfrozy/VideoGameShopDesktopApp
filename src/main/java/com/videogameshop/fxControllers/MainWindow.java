@@ -57,8 +57,6 @@ public class MainWindow implements Initializable {
     }
 
     //Pass the entity manager object and user from a previous form
-
-
     public void createRecord() {
         // Console
         HibernateShop hibernateShop = new HibernateShop(entityManagerFactory);
@@ -91,6 +89,7 @@ public class MainWindow implements Initializable {
                         productColorField.getText()
                 );
                 productAdminList.getItems().add(accessory);
+                hibernateShop.create(accessory);
             } catch (NumberFormatException e) {
                 showAlert(Alert.AlertType.ERROR, "Error", "Price and quantity must be valid numbers");
             }
@@ -105,6 +104,7 @@ public class MainWindow implements Initializable {
                         productPegiChoice.getValue()
                 );
                 productAdminList.getItems().add(videoGame);
+                hibernateShop.create(videoGame);
             } catch (NumberFormatException e) {
                 showAlert(Alert.AlertType.ERROR, "Error", "Price must be a valid number");
             }

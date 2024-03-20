@@ -25,12 +25,12 @@ public class GenericHibernate {
     public <T> void create(T entity) {
         EntityManager entityManager = getEntityManager();
         try {
-
             entityManager.getTransaction().begin();
             entityManager.persist(entity);
             entityManager.getTransaction().commit();
+            System.out.println("Record created successfully");
         } catch (Exception e) {
-
+            System.out.println("Error creating record: " + e.getMessage());
         } finally {
             if (entityManager != null) {
                 entityManager.close();
@@ -39,11 +39,9 @@ public class GenericHibernate {
     }
 
     //merge = UPDATE
-
     public <T> void update(T entity) {
         EntityManager entityManager = getEntityManager();
         try {
-
             entityManager.getTransaction().begin();
             entityManager.merge(entity);
             entityManager.getTransaction().commit();
@@ -102,5 +100,4 @@ public class GenericHibernate {
         }
         return result;
     }
-
 }

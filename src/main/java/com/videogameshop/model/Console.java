@@ -14,10 +14,15 @@ import lombok.Setter;
 public class Console extends Product {
     private String title;
     private String description;
-    private String size;
-    private float ranking;
     private String color;
+    private float price;
+    private String size;
 
+    public Console(String title, String description, float price, String color, String size) {
+        super(null, 0, description, title, price);
+        this.color = color;
+        this.size = size;
+    }
 
     @Override
     public String getProductType() {
