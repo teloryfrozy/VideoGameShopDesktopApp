@@ -1,9 +1,12 @@
 package com.videogameshop.fxControllers;
 
+import com.videogameshop.hibernate.HibernateShop;
 import com.videogameshop.model.Accessory;
 import com.videogameshop.model.Console;
 import com.videogameshop.model.Product;
 import com.videogameshop.model.VideoGame;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -42,15 +45,23 @@ public class MainWindow implements Initializable {
     private ChoiceBox<String> productSizeChoice;
     @FXML
     private ChoiceBox<String> productPegiChoice;
+    private EntityManagerFactory entityManagerFactory;
+    private HibernateShop hibernateShop;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        entityManagerFactory = Persistence.createEntityManagerFactory("ProjectManagementSystem");
         productSizeChoice.getItems().addAll(sizes);
         productPegiChoice.getItems().addAll(pegis);
+
     }
+
+    //Pass the entity manager object and user from a previous form
+
 
     public void createRecord() {
         // Console
+        HibernateShop hibernateShop = new HibernateShop(entityManagerFactory);
         if (consoleRadio.isSelected()) {
             try {
                 float price = Float.parseFloat(productPriceField.getText());
@@ -63,6 +74,7 @@ public class MainWindow implements Initializable {
                         productSizeChoice.getValue()
                 );
                 productAdminList.getItems().add(console);
+                hibernateShop.create(console);
 
             } catch (NumberFormatException e) {
                 showAlert(Alert.AlertType.ERROR, "Error", "Price must be a valid number");
@@ -102,28 +114,17 @@ public class MainWindow implements Initializable {
     }
 
     public void disableFields() {
-        // TODO: fix issue with radio button selection
-
         if (consoleRadio.isSelected()) {
-            accessoryRadio.setSelected(false);
-            videoGameRadio.setSelected(false);
-
             productPegiChoice.setDisable(true);
             productQuantityField.setDisable(true);
             productSizeChoice.setDisable(true);
             productColorField.setDisable(false);
         } else if (accessoryRadio.isSelected()) {
-            consoleRadio.setSelected(false);
-            videoGameRadio.setSelected(false);
-
             productPegiChoice.setDisable(true);
             productQuantityField.setDisable(false);
             productSizeChoice.setDisable(true);
             productColorField.setDisable(true);
         } else {
-            consoleRadio.setSelected(false);
-            accessoryRadio.setSelected(false);
-
             productPegiChoice.setDisable(false);
             productQuantityField.setDisable(true);
             productSizeChoice.setDisable(true);

@@ -1,13 +1,12 @@
 package com.videogameshop.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import java.io.Serializable;
 import java.util.List;
@@ -17,13 +16,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public abstract class Product implements Serializable {
+public abstract class Product  {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     private String title;
     private String description;
     private float price;
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     protected List<Comment> comments;
 
     public Product(List<Comment> comments, int id, String description, String title, float price) {

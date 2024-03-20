@@ -1,6 +1,8 @@
 package com.videogameshop.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,12 +18,13 @@ import java.time.LocalDate;
 @Entity
 public abstract class User implements Serializable {
     @Id
-    protected int id;
-    protected String login;
-    protected String password;
-    protected String name;
-    protected String surname;
-    protected LocalDate dateCreated;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int id;
+    public String login;
+    public String password;
+    public String name;
+    public String surname;
+    public LocalDate dateCreated;
 
     public User(String name, String surname, String login, String password) {
         this.name = name;
