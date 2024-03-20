@@ -19,9 +19,9 @@ public class VideoGame extends Product {
 
     public VideoGame(String title, String description, float price, String pegi) {
         super(null, 0, description, title, price);
-        this.pegi = pegi;
+        this.pegi = pegi.isEmpty() ? "PEGI 3" : pegi;
     }
-
+    
     @Override
     public String getProductType() {
         return "Video Game";

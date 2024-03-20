@@ -18,6 +18,7 @@ public class Console extends Product {
     private float price;
     private String size;
 
+
     public Console(String title, String description, float price, String color, String size) {
         super(null, 0, description, title, price);
         this.color = color;
