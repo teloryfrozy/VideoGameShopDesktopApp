@@ -46,7 +46,6 @@ public class MainWindow implements Initializable {
     @FXML
     private ChoiceBox<String> productPegiChoice;
     private EntityManagerFactory entityManagerFactory;
-    private HibernateShop hibernateShop;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -55,7 +54,6 @@ public class MainWindow implements Initializable {
         productPegiChoice.getItems().addAll(pegis);
     }
 
-    //Pass the entity manager object and user from a previous form
     public void createRecord() {
         HibernateShop hibernateShop = new HibernateShop(entityManagerFactory);
 
@@ -104,7 +102,6 @@ public class MainWindow implements Initializable {
             String size = productSizeChoice.getValue();
             String priceText = productPriceField.getText().trim();
 
-
             if (color.isEmpty()) {
                 System.out.println("Error: Color is empty");
                 showAlert(Alert.AlertType.ERROR, "Error", "Color is mandatory");
@@ -119,7 +116,6 @@ public class MainWindow implements Initializable {
                 return;
             }
             try {
-                // ALL FIELDS ARE MANDATORY except description
                 Accessory accessory = new Accessory(productTitleField.getText(), productDescriptionField.getText(), Float.parseFloat(productPriceField.getText()), Integer.parseInt(productQuantityField.getText()), productColorField.getText());
                 productAdminList.getItems().add(accessory);
                 hibernateShop.create(accessory);
@@ -131,7 +127,6 @@ public class MainWindow implements Initializable {
         else if (videoGameRadio.isSelected()) {
             String priceText = productPriceField.getText().trim();
             String pegi = productPegiChoice.getValue();
-
 
             if (priceText.isEmpty()) {
                 System.out.println("Error: Price is empty");
@@ -158,7 +153,7 @@ public class MainWindow implements Initializable {
         if (consoleRadio.isSelected()) {
             productPegiChoice.setDisable(true);
             productQuantityField.setDisable(true);
-            productSizeChoice.setDisable(true);
+            productSizeChoice.setDisable(false);
             productColorField.setDisable(false);
         } else if (accessoryRadio.isSelected()) {
             productPegiChoice.setDisable(true);
@@ -174,23 +169,48 @@ public class MainWindow implements Initializable {
     }
 
     public void loadProductData() {
+        // TODO: Load product data from the database and call this method when the application starts
+        HibernateShop hibernateShop = new HibernateShop(entityManagerFactory);
+
         Product product = productAdminList.getSelectionModel().getSelectedItem();
 
         if (product instanceof Console console) {
             productTitleField.setText(console.getTitle());
             productDescriptionField.setText(console.getDescription());
 
+            consoleRadio.setSelected(true);
+            productPegiChoice.setDisable(true);
+            productQuantityField.setDisable(true);
+            productSizeChoice.setDisable(true);
+            productColorField.setDisable(false);
+
         } else if (product instanceof Accessory accessory) {
             productTitleField.setText(accessory.getTitle());
             productDescriptionField.setText(accessory.getDescription());
+
+            accessoryRadio.setSelected(true);
+            productPegiChoice.setDisable(true);
+            productQuantityField.setDisable(false);
+            productSizeChoice.setDisable(true);
+            productColorField.setDisable(true);
+
         } else {
             VideoGame videoGame = (VideoGame) product;
             productTitleField.setText(videoGame.getTitle());
             productDescriptionField.setText(videoGame.getDescription());
+
+
+            videoGameRadio.setSelected(true);
+            productPegiChoice.setDisable(false);
+            productQuantityField.setDisable(true);
+            productSizeChoice.setDisable(true);
+            productColorField.setDisable(true);
         }
     }
 
     public void updateRecord() {
+        HibernateShop hibernateShop = new HibernateShop(entityManagerFactory);
+
         try {
             Product product = productAdminList.getSelectionModel().getSelectedItem();
 
@@ -208,16 +228,21 @@ public class MainWindow implements Initializable {
                 videoGame.setDescription(productDescriptionField.getText());
                 System.out.println("\u001B[32mVideo Game updated successfully: " + product.getTitle());
             }
+            hibernateShop.update(productAdminList.getSelectionModel().getSelectedItem());
+
         } catch (NullPointerException e) {
             showAlert(Alert.AlertType.INFORMATION, "Warning", "Please select a product to update");
         }
     }
 
     public void deleteRecord() {
+        HibernateShop hibernateShop = new HibernateShop(entityManagerFactory);
+
         try {
             Product product = productAdminList.getSelectionModel().getSelectedItem();
             productAdminList.getItems().remove(product);
             product.removeMessage();
+            hibernateShop.delete(product.getClass(), product.getId());
         } catch (NullPointerException e) {
             showAlert(Alert.AlertType.INFORMATION, "Warning", "Please select a product to delete");
         }
