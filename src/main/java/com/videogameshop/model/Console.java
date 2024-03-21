@@ -18,11 +18,10 @@ public class Console extends Product {
     private float price;
     private String size;
 
-
-    public Console(String title, String description, float price, String color, String size) {
+    public Console(String title, String description, float price, String size, String color) {
         super(null, 0, description, title, price);
-        this.color = color;
         this.size = size;
+        this.color = color;
     }
 
     @Override

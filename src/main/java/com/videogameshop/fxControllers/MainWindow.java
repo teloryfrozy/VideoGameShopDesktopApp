@@ -90,7 +90,7 @@ public class MainWindow implements Initializable {
                 return;
             }
             try {
-                Console console = new Console(title, description, color, price, size);
+                Console console = new Console(title, description, price, size, color);
                 productAdminList.getItems().add(console);
                 hibernateShop.create(console);
             } catch (Exception e) {
