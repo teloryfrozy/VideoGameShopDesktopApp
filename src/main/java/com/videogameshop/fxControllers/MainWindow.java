@@ -159,19 +159,39 @@ public class MainWindow implements Initializable {
 
         Product product = productAdminList.getSelectionModel().getSelectedItem();
 
-        if (product instanceof Console console) {
+        if (product instanceof Console) {
+            Console console = hibernateShop.getEntityById(Console.class, product.getId());
+
+            System.out.println("Console: " + console.getTitle());
+            System.out.println("Description: " + console.getDescription());
+            System.out.println("Color: " + console.getColor());
+            System.out.println("Size: " + console.getSize());
+            System.out.println("Price: " + console.getPrice());
+
             productTitleField.setText(console.getTitle());
             productDescriptionField.setText(console.getDescription());
+            productColorField.setText(console.getColor());
+            productSizeChoice.setValue(console.getSize());
+            productPriceField.setText(String.valueOf(console.getPrice()));
 
             consoleRadio.setSelected(true);
             productPegiChoice.setDisable(true);
             productQuantityField.setDisable(true);
-            productSizeChoice.setDisable(true);
+            productSizeChoice.setDisable(false);
             productColorField.setDisable(false);
 
-        } else if (product instanceof Accessory accessory) {
+        } else if (product instanceof Accessory) {
+            Accessory accessory = hibernateShop.getEntityById(Accessory.class, product.getId());
             productTitleField.setText(accessory.getTitle());
             productDescriptionField.setText(accessory.getDescription());
+            productColorField.setText(accessory.getColor());
+            productPriceField.setText(String.valueOf(accessory.getPrice()));
+
+            System.out.println("Accessory: " + accessory.getTitle());
+            System.out.println("Description: " + accessory.getDescription());
+            System.out.println("Color: " + accessory.getColor());
+            System.out.println("Quantity: " + accessory.getQuantity());
+            System.out.println("Price: " + accessory.getPrice());
 
             accessoryRadio.setSelected(true);
             productPegiChoice.setDisable(true);
@@ -180,10 +200,16 @@ public class MainWindow implements Initializable {
             productColorField.setDisable(true);
 
         } else {
-            VideoGame videoGame = (VideoGame) product;
+            VideoGame videoGame = hibernateShop.getEntityById(VideoGame.class, product.getId());
             productTitleField.setText(videoGame.getTitle());
             productDescriptionField.setText(videoGame.getDescription());
+            productPegiChoice.setValue(videoGame.getPegi());
+            productPriceField.setText(String.valueOf(videoGame.getPrice()));
 
+            System.out.println("Video Game: " + videoGame.getTitle());
+            System.out.println("Description: " + videoGame.getDescription());
+            System.out.println("PEGI: " + videoGame.getPegi());
+            System.out.println("Price: " + videoGame.getPrice());
 
             videoGameRadio.setSelected(true);
             productPegiChoice.setDisable(false);
