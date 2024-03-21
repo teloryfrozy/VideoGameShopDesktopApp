@@ -52,6 +52,10 @@ public class MainWindow implements Initializable {
         entityManagerFactory = Persistence.createEntityManagerFactory("ProjectManagementSystem");
         productSizeChoice.getItems().addAll(sizes);
         productPegiChoice.getItems().addAll(pegis);
+
+        // Add existing products in list
+//        HibernateShop hibernateShop = new HibernateShop(entityManagerFactory);
+//        shopProducts.getItems().addAll(hibernateShop.getAllRecords());
     }
 
     public void createRecord() {

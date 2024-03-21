@@ -2,8 +2,11 @@ package com.videogameshop.hibernate;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import javafx.scene.control.Alert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +17,13 @@ public class GenericHibernate {
 
     public GenericHibernate(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
+    }
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     EntityManager getEntityManager() {
@@ -30,7 +40,7 @@ public class GenericHibernate {
             entityManager.getTransaction().commit();
             System.out.println("Record created successfully");
         } catch (Exception e) {
-            System.out.println("Error creating record: " + e.getMessage());
+            showAlert("Error creating record: ", e.getMessage();
         } finally {
             if (entityManager != null) {
                 entityManager.close();
@@ -47,7 +57,7 @@ public class GenericHibernate {
             entityManager.getTransaction().commit();
             System.out.println("Record updated successfully");
         } catch (Exception e) {
-            System.out.println("Error updating record: " + e.getMessage());
+            showAlert("Error updating record: ", e.getMessage());
         } finally {
             if (entityManager != null) {
                 entityManager.close();
@@ -59,12 +69,15 @@ public class GenericHibernate {
         List<T> listOfRecords = new ArrayList<>();
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {
-            CriteriaQuery query = entityManager.getCriteriaBuilder().createQuery();
-            query.select(query.from(className));
-            Query q = entityManager.createQuery(query);
-            listOfRecords = q.getResultList();
-        } catch (Exception e) {
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(className);
+            Root<T> root = criteriaQuery.from(className);
+            criteriaQuery.select(root);
 
+            TypedQuery<T> query = entityManager.createQuery(criteriaQuery);
+            listOfRecords = query.getResultList();
+        } catch (Exception e) {
+            showAlert("Error getting records: ", e.getMessage());
         } finally {
             if (entityManager != null) {
                 entityManager.close();
@@ -72,6 +85,7 @@ public class GenericHibernate {
         }
         return listOfRecords;
     }
+
 
     public <T> void delete(Class<T> entityClass, int id) {
         EntityManager em = null;
@@ -83,7 +97,7 @@ public class GenericHibernate {
             em.getTransaction().commit();
             System.out.println("Record deleted successfully");
         } catch (Exception e) {
-            System.out.println("Error deleting record: " + e.getMessage());
+            showAlert("Error deleting record: ", e.getMessage());
         } finally {
             if (em != null) em.close();
         }
@@ -98,7 +112,7 @@ public class GenericHibernate {
             result = em.find(entityClass, id);
             em.getTransaction().commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            showAlert("Error getting record with id: " + id, e.getMessage());
         }
         return result;
     }
