@@ -59,6 +59,17 @@ public class MainWindow implements Initializable {
 
         String title = productTitleField.getText().trim();
         String description = productDescriptionField.getText().trim();
+        String color = productColorField.getText().trim();
+        String size = productSizeChoice.getValue();
+        String priceText = productPriceField.getText().trim();
+        String pegi = productPegiChoice.getValue();
+        float price = 0.0f;
+
+        try {
+            price = Float.parseFloat(priceText);
+        } catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Price must be a valid number");
+        }
 
         if (title.isEmpty()) {
             System.out.println("Error: Title is empty");
@@ -66,83 +77,57 @@ public class MainWindow implements Initializable {
             return;
         }
 
-        // Console
         if (consoleRadio.isSelected()) {
-            String color = productColorField.getText().trim();
-            String size = productSizeChoice.getValue();
-            String priceText = productPriceField.getText().trim();
 
             if (color.isEmpty()) {
-                System.out.println("Error: Color is empty");
                 showAlert(Alert.AlertType.ERROR, "Error", "Color is mandatory");
                 return;
             } else if (size == null) {
-                System.out.println("Error: Size is empty");
                 showAlert(Alert.AlertType.ERROR, "Error", "Size is mandatory");
                 return;
             } else if (priceText.isEmpty()) {
-                System.out.println("Error: Price is empty");
                 showAlert(Alert.AlertType.ERROR, "Error", "Price is mandatory");
                 return;
             }
             try {
-                float price = Float.parseFloat(priceText);
-
                 Console console = new Console(title, description, color, price, size);
                 productAdminList.getItems().add(console);
                 hibernateShop.create(console);
-            } catch (NumberFormatException e) {
-                System.out.println("Error: Price must be a valid number");
-                showAlert(Alert.AlertType.ERROR, "Error", "Price must be a valid number");
+            } catch (Exception e) {
+                showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
             }
-        }
-        // Accessory
-        else if (accessoryRadio.isSelected()) {
-            String color = productColorField.getText().trim();
-            String size = productSizeChoice.getValue();
-            String priceText = productPriceField.getText().trim();
+        } else if (accessoryRadio.isSelected()) {
 
             if (color.isEmpty()) {
-                System.out.println("Error: Color is empty");
                 showAlert(Alert.AlertType.ERROR, "Error", "Color is mandatory");
                 return;
-            } else if (size == null) {
-                System.out.println("Error: Size is empty");
-                showAlert(Alert.AlertType.ERROR, "Error", "Size is mandatory");
-                return;
             } else if (priceText.isEmpty()) {
-                System.out.println("Error: Price is empty");
                 showAlert(Alert.AlertType.ERROR, "Error", "Price is mandatory");
                 return;
             }
             try {
-                Accessory accessory = new Accessory(productTitleField.getText(), productDescriptionField.getText(), Float.parseFloat(productPriceField.getText()), Integer.parseInt(productQuantityField.getText()), productColorField.getText());
+                int quantity = Integer.parseInt(productQuantityField.getText());
+                Accessory accessory = new Accessory(title, description, price, quantity, color);
                 productAdminList.getItems().add(accessory);
                 hibernateShop.create(accessory);
             } catch (NumberFormatException e) {
-                showAlert(Alert.AlertType.ERROR, "Error", "Price and quantity must be valid numbers");
+                showAlert(Alert.AlertType.ERROR, "Error", "Quantity must be a valid number");
             }
-        }
-        // Video Game
-        else if (videoGameRadio.isSelected()) {
-            String priceText = productPriceField.getText().trim();
-            String pegi = productPegiChoice.getValue();
+        } else if (videoGameRadio.isSelected()) {
 
             if (priceText.isEmpty()) {
-                System.out.println("Error: Price is empty");
                 showAlert(Alert.AlertType.ERROR, "Error", "Price is mandatory");
                 return;
             } else if (pegi == null) {
-                System.out.println("Error: PEGI is empty");
                 showAlert(Alert.AlertType.ERROR, "Error", "PEGI is mandatory");
                 return;
             }
             try {
-                VideoGame videoGame = new VideoGame(productTitleField.getText(), productDescriptionField.getText(), Float.parseFloat(productPriceField.getText()), productPegiChoice.getValue());
+                VideoGame videoGame = new VideoGame(title, description, price, pegi);
                 productAdminList.getItems().add(videoGame);
                 hibernateShop.create(videoGame);
-            } catch (NumberFormatException e) {
-                showAlert(Alert.AlertType.ERROR, "Error", "Price must be a valid number");
+            } catch (Exception e) {
+                showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
             }
         } else {
             showAlert(Alert.AlertType.WARNING, "Warning", "Please select a product type");
@@ -158,8 +143,8 @@ public class MainWindow implements Initializable {
         } else if (accessoryRadio.isSelected()) {
             productPegiChoice.setDisable(true);
             productQuantityField.setDisable(false);
+            productColorField.setDisable(false);
             productSizeChoice.setDisable(true);
-            productColorField.setDisable(true);
         } else {
             productPegiChoice.setDisable(false);
             productQuantityField.setDisable(true);
