@@ -40,7 +40,7 @@ public class GenericHibernate {
             entityManager.getTransaction().commit();
             System.out.println("Record created successfully");
         } catch (Exception e) {
-            showAlert("Error creating record: ", e.getMessage();
+            showAlert("Error creating record: ", e.getMessage());
         } finally {
             if (entityManager != null) {
                 entityManager.close();

@@ -54,8 +54,9 @@ public class MainWindow implements Initializable {
         productPegiChoice.getItems().addAll(pegis);
 
         // Add existing products in list
-//        HibernateShop hibernateShop = new HibernateShop(entityManagerFactory);
-//        shopProducts.getItems().addAll(hibernateShop.getAllRecords());
+        HibernateShop hibernateShop = new HibernateShop(entityManagerFactory);
+        shopProducts.getItems().addAll(hibernateShop.getAllRecords(Product.class));
+        productAdminList.getItems().addAll(hibernateShop.getAllRecords(Product.class));
     }
 
     public void createRecord() {
