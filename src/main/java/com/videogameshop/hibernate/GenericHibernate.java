@@ -45,8 +45,9 @@ public class GenericHibernate {
             entityManager.getTransaction().begin();
             entityManager.merge(entity);
             entityManager.getTransaction().commit();
+            System.out.println("Record updated successfully");
         } catch (Exception e) {
-
+            System.out.println("Error updating record: " + e.getMessage());
         } finally {
             if (entityManager != null) {
                 entityManager.close();
@@ -80,8 +81,9 @@ public class GenericHibernate {
             var object = em.find(entityClass, id);
             em.remove(object);
             em.getTransaction().commit();
+            System.out.println("Record deleted successfully");
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error deleting record: " + e.getMessage());
         } finally {
             if (em != null) em.close();
         }
